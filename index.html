@@ -1,1 +1,29 @@
-<!doctype html><html lang=es><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Electro Monte Grande | Aires</title><meta http-equiv=refresh content="0;url=https://mercadopagolink.github.io/electro-monte-grande-catalogo/catalogo.html"></head><body><p>Cargando catálogo Electro Monte Grande… <a href=catalogo.html>Abrir catálogo</a></p></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Electro Monte Grande | Catálogo</title>
+<style>body{font-family:Arial,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#f4f4f4}#s{color:#555}</style>
+</head>
+<body>
+<p id="s">Cargando catálogo Electro Monte Grande…</p>
+<script>
+(async function(){
+  const n = 1;
+  let b64 = '';
+  for (let i = 0; i < n; i++) {
+    const r = await fetch('part' + i + '.txt');
+    b64 += await r.text();
+  }
+  const bin = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+  const ds = new DecompressionStream('gzip');
+  const stream = new Blob([bin]).stream().pipeThrough(ds);
+  const html = await new Response(stream).text();
+  document.open();
+  document.write(html);
+  document.close();
+})().catch(e => { document.getElementById('s').textContent = 'Error: ' + e; });
+</script>
+</body>
+</html>
