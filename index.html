@@ -3,68 +3,112 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Electro Monte Grande | Electrodomésticos</title>
+  <title>Electro Monte Grande | Celulares, Smart TV y Aires</title>
+  <meta name="description" content="Catálogo 2026 de Electro Monte Grande: 200 celulares, Smart TV y aires acondicionados. Precios en pesos, cuotas y consulta por WhatsApp.">
   <link rel="stylesheet" href="css/estilo.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 </head>
 <body>
-  <header class="bar">
-    <button class="icon" id="menu-btn" aria-label="Menú">☰</button>
-    <a class="logo" href="#">EMG</a>
-    <input id="q" type="search" placeholder="Fijate en Electro MG">
-    <a class="icon" id="wa-top" target="_blank" rel="noopener" aria-label="WhatsApp">↗</a>
+  <header class="top">
+    <div class="top-row">
+      <a class="brand" href="#inicio">
+        <h1>Electro <span>MG</span></h1>
+        <p>Celulares · TV · Aires · Monte Grande</p>
+      </a>
+      <button class="cart-btn" id="cart-btn" type="button" aria-label="Carrito">
+        🛒 <span id="cart-count">0</span>
+      </button>
+    </div>
+    <input id="q" type="search" placeholder="Buscar marca, modelo o categoría" autocomplete="off">
   </header>
 
-  <div class="loc">⌂ Estás en <b>Monte Grande</b></div>
+  <div class="promo" id="promo"></div>
 
-  <nav class="tabs">
-    <a href="#ofertas">Más vendidos</a>
-    <a href="#ofertas">Ofertas</a>
-    <a class="hot" href="#catalogo">Aires</a>
-    <a href="#calc">Calculadora</a>
+  <section class="hero" id="inicio">
+    <div class="hero-in">
+      <p class="kicker">Catálogo 2026 · 200 productos</p>
+      <h2>Tecnología para tu casa, en Monte Grande</h2>
+      <p>Celulares, Smart TV y aires acondicionados con precios de referencia, cuotas y asesoramiento por WhatsApp.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#catalogo">Ver catálogo</a>
+        <a class="btn ghost" href="#calc">Calcular frigorías</a>
+      </div>
+    </div>
+  </section>
+
+  <nav class="cats" id="cats">
+    <button type="button" data-cat="todas" class="on">Todos</button>
+    <button type="button" data-cat="celulares">Celulares</button>
+    <button type="button" data-cat="tvs">Smart TV</button>
+    <button type="button" data-cat="aires">Aires</button>
   </nav>
 
-  <section class="pay">
-    <div><span>💳</span><p>Medios de pago<br><b>Hasta 15% OFF</b></p></div>
-    <div><span>🚚</span><p>Envíos<br><b>A todo el país</b></p></div>
-  </section>
+  <main class="wrap">
+    <ul class="benefits">
+      <li>Hasta 15% OFF en 1 pago</li>
+      <li>Envíos a Monte Grande y zona sur</li>
+      <li>Asesoramiento por WhatsApp</li>
+      <li>200 productos en stock consultable</li>
+    </ul>
 
-  <section class="cats" id="cats"></section>
+    <section class="card" id="calc">
+      <h2>Calculadora de frigorías</h2>
+      <p class="hint">Regla práctica: 500 frigorías por m². Es una guía; el instalador confirma según techo, sol y aislación.</p>
+      <input id="m2" type="number" min="4" step="1" placeholder="Metros cuadrados del ambiente">
+      <button type="button" id="calc-btn">Calcular recomendación</button>
+      <p id="calc-msg">Ingresá los m² y te sugerimos un aire del catálogo.</p>
+    </section>
 
-  <section class="deal" id="ofertas">
-    <h2>Ofertas únicas</h2>
-    <div class="rail" id="ofertas-rail"></div>
-  </section>
+    <section id="catalogo">
+      <div class="sec-row">
+        <h3 class="sec">CATÁLOGO</h3>
+        <p class="sec-count" id="sec-count"></p>
+      </div>
+      <div class="toolbar">
+        <div class="chips" id="chips"></div>
+        <select id="orden" aria-label="Ordenar">
+          <option value="destacados">Destacados</option>
+          <option value="precio-asc">Precio: menor a mayor</option>
+          <option value="precio-desc">Precio: mayor a menor</option>
+          <option value="nombre">Nombre A-Z</option>
+        </select>
+      </div>
+      <div id="grid" class="grid"></div>
+      <div class="pager" id="pager"></div>
+    </section>
+  </main>
 
-  <section class="calc-box" id="calc">
-    <h2>Calculá las frigorías</h2>
-    <p>500 frigorías por m² · te sugerimos un equipo</p>
-    <input id="m2" type="number" min="4" placeholder="m² del ambiente">
-    <button type="button" id="calc-btn">Calcular</button>
-    <p id="calc-msg">Ingresá los m² para una recomendación.</p>
-  </section>
+  <aside class="drawer" id="drawer" hidden>
+    <div class="drawer-bg" data-close></div>
+    <div class="drawer-panel" role="dialog" aria-labelledby="drawer-title">
+      <button class="drawer-x" type="button" data-close aria-label="Cerrar">×</button>
+      <div id="drawer-body"></div>
+    </div>
+  </aside>
 
-  <section class="list" id="catalogo">
-    <h2>Catálogo</h2>
-    <div class="chips" id="chips"></div>
-    <div class="grid" id="grid"></div>
-  </section>
+  <aside class="drawer" id="cart-drawer" hidden>
+    <div class="drawer-bg" data-cart-close></div>
+    <div class="drawer-panel" role="dialog" aria-labelledby="cart-title">
+      <button class="drawer-x" type="button" data-cart-close aria-label="Cerrar">×</button>
+      <h3 id="cart-title">Tu consulta</h3>
+      <div id="cart-list"></div>
+      <p class="cart-total" id="cart-total"></p>
+      <a class="btn wa-btn" id="cart-wa" target="_blank" rel="noopener">Consultar este pedido por WhatsApp</a>
+    </div>
+  </aside>
 
   <footer>
     <strong>Electro Monte Grande</strong>
     <span id="pie-txt"></span>
-    <a id="wa-footer" class="wa-cta" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+    <span id="pie-dir"></span>
+    <a id="wa-footer" class="btn wa-btn" target="_blank" rel="noopener">Consultar por WhatsApp</a>
   </footer>
-  <a class="fab" id="wa-float" target="_blank" rel="noopener">↗</a>
-
-  <aside class="drawer" id="drawer">
-    <button id="close-menu">Cerrar</button>
-    <a href="#cats">Categorías</a>
-    <a href="#ofertas">Ofertas</a>
-    <a href="#calc">Calculadora</a>
-    <a href="#catalogo">Catálogo</a>
-  </aside>
+  <a class="wa" id="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">↗</a>
 
   <script src="js/config.js"></script>
+  <script src="js/celulares.js"></script>
+  <script src="js/tvs.js"></script>
+  <script src="js/aires.js"></script>
   <script src="js/productos.js"></script>
   <script src="js/app.js"></script>
 </body>
