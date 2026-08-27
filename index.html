@@ -3,67 +3,67 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Electro Monte Grande | Celulares, Smart TV y Aires</title>
-  <meta name="description" content="Catálogo 2026 de Electro Monte Grande: 200 celulares, Smart TV y aires acondicionados.">
-  <link rel="stylesheet" href="css/estilo.css">
+  <title>Electro Monte Grande | Garantía de confianza</title>
+  <link rel="stylesheet" href="css/estilo.css?v=g1">
 </head>
 <body>
-  <div class="promo">Catálogo 2026 · 200 productos · Hasta 15% OFF en 1 pago</div>
-  <header class="bar">
-    <button class="icon" id="menu-btn" aria-label="Menú">☰</button>
-    <a class="logo" href="#">EMG</a>
-    <input id="q" type="search" placeholder="Buscar celular, TV o aire">
-    <a class="icon" id="wa-top" target="_blank" rel="noopener" aria-label="WhatsApp">↗</a>
+  <header class="g-top">
+    <button class="g-ico" id="menu-btn" aria-label="Menú">☰</button>
+    <a class="g-logo" href="#">EMG</a>
+    <span class="g-tag">Garantía de confianza</span>
+    <a class="g-ico" id="wa-top" target="_blank" rel="noopener">↗</a>
   </header>
-  <div class="loc">⌂ Estás en <b>Monte Grande</b></div>
-  <nav class="tabs">
-    <a href="#catalogo">Catálogo</a>
-    <a href="#ofertas">Ofertas</a>
-    <a class="hot" href="#cats">Celulares</a>
-    <a href="#cats">Smart TV</a>
-    <a href="#calc">Aires</a>
-  </nav>
-  <section class="pay">
-    <div><span>💳</span><p>Medios de pago<br><b>Hasta 15% OFF</b></p></div>
-    <div><span>🚚</span><p>Envíos<br><b>Monte Grande y zona sur</b></p></div>
+  <form class="g-search" action="#catalogo" onsubmit="return false">
+    <input id="q" type="search" placeholder="¿Qué estás buscando?">
+  </form>
+  <nav class="g-nav" id="cats"></nav>
+
+  <section class="g-hero">
+    <p>OFERTAS DEL MES</p>
+    <h1>Hasta 15% OFF<br>en 1 pago</h1>
+    <a href="#ofertas">Ver ofertas</a>
   </section>
-  <section class="cats" id="cats"></section>
-  <section class="deal" id="ofertas">
-    <h2>Ofertas únicas</h2>
-    <div class="rail" id="ofertas-rail"></div>
+
+  <section class="g-bens">
+    <div>6 cuotas<br><b>sin interés</b></div>
+    <div>+15% OFF<br><b>transferencia</b></div>
+    <div>Envío<br><b>zona sur</b></div>
   </section>
-  <section class="calc-box" id="calc">
+
+  <section class="g-block" id="ofertas">
+    <h2>Ofertas del mes</h2>
+    <div class="g-rail" id="ofertas-rail"></div>
+  </section>
+
+  <section class="g-calc" id="calc">
     <h2>Calculá las frigorías</h2>
-    <p>500 frigorías por m² · te sugerimos un equipo</p>
+    <p>500 frigorías por m²</p>
     <input id="m2" type="number" min="4" placeholder="m² del ambiente">
     <button type="button" id="calc-btn">Calcular</button>
-    <p id="calc-msg">Ingresá los m² para una recomendación.</p>
+    <p id="calc-msg">Ingresá los m² y te sugerimos un aire.</p>
   </section>
-  <section class="list" id="catalogo">
+
+  <section class="g-block" id="catalogo">
     <h2>Catálogo</h2>
-    <div class="chips" id="chips"></div>
-    <div class="grid" id="grid"></div>
+    <div class="g-chips" id="chips"></div>
+    <div class="g-grid" id="grid"></div>
   </section>
-  <footer>
+
+  <footer class="g-foot">
     <strong>Electro Monte Grande</strong>
     <span id="pie-txt"></span>
-    <a id="wa-footer" class="wa-cta" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+    <a id="wa-footer" class="g-wa" target="_blank" rel="noopener">Consultar por WhatsApp</a>
   </footer>
   <a class="fab" id="wa-float" target="_blank" rel="noopener">↗</a>
   <aside class="drawer" id="drawer">
     <button id="close-menu">Cerrar</button>
-    <a href="#cats">Categorías</a>
-    <a href="#ofertas">Ofertas</a>
-    <a href="#calc">Calculadora</a>
+    <a href="#ofertas">Ofertas del mes</a>
     <a href="#catalogo">Catálogo</a>
+    <a href="#calc">Calculadora</a>
   </aside>
   <script src="js/config.js"></script>
   <script src="js/imgs.js"></script>
-  <script src="js/rows-1.js"></script>
-  <script src="js/rows-2.js"></script>
-  <script src="js/rows-3.js"></script>
-  <script src="js/rows-4.js"></script>
   <script src="js/productos.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=g1"></script>
 </body>
 </html>
