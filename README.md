@@ -15,14 +15,14 @@ Tienda / catálogo estático en GitHub Pages.
 - Calculadora de frigorías
 - Consulta por WhatsApp y lista de pedido
 
-Los precios y descripciones se armaron como referencia de mercado local (listas públicas de comercios argentinos, agosto 2026). No son una cotización final: confirmá stock y valor por WhatsApp.
+Los precios y descripciones se armáron como referencia de mercado local (listas públicas de comercios argentinos, agosto 2026). No son una cotización final: confirmá stock y valor por WhatsApp.
 
 Las fotos de producto son imágenes libres (licencia Unsplash), no capturas de tiendas. Evitamos republicar fotos con copyright de fabricantes o retailers.
 
 ## Cómo editar
 
 - Textos y WhatsApp: `js/config.js` (poné el número real, solo dígitos con 54)
-- Productos: `js/celulares.js`, `js/tvs.js`, `js/aires.js`
+- Productos: `js/productos.js`
 - Colores / layout: `css/estilo.css`
 - Estructura: `index.html`
 
