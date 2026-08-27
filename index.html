@@ -1,29 +1,39 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Electro Monte Grande | Catálogo</title>
-<style>body{font-family:Arial,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#f4f4f4}#s{color:#555}</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Electro Monte Grande | Catálogo</title>
+  <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
-<p id="s">Cargando catálogo Electro Monte Grande…</p>
-<script>
-(async function(){
-  const n = 1;
-  let b64 = '';
-  for (let i = 0; i < n; i++) {
-    const r = await fetch('part' + i + '.txt');
-    b64 += await r.text();
-  }
-  const bin = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
-  const ds = new DecompressionStream('gzip');
-  const stream = new Blob([bin]).stream().pipeThrough(ds);
-  const html = await new Response(stream).text();
-  document.open();
-  document.write(html);
-  document.close();
-})().catch(e => { document.getElementById('s').textContent = 'Error: ' + e; });
-</script>
+  <header class="top">
+    <h1>Electro <span>MG</span></h1>
+    <p>Electrodomésticos · Monte Grande</p>
+    <input id="q" type="search" placeholder="Buscar producto, marca o modelo" autocomplete="off">
+  </header>
+  <div class="promo" id="promo"></div>
+
+  <main class="wrap">
+    <section class="card">
+      <h2>Calculadora de Frigorías</h2>
+      <input id="m2" type="number" min="4" step="1" placeholder="Metros cuadrados de la habitación">
+      <button type="button" id="calc-btn">Calcular recomendación</button>
+      <p id="calc-msg">Ingresá los m² y calculá qué aire te conviene</p>
+    </section>
+
+    <h3 class="sec">CATÁLOGO</h3>
+    <div id="grid" class="grid"></div>
+  </main>
+
+  <footer>
+    <strong>Electro Monte Grande</strong>
+    <span id="pie-txt"></span>
+  </footer>
+  <a class="wa" id="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">↗</a>
+
+  <script src="js/config.js"></script>
+  <script src="js/productos.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

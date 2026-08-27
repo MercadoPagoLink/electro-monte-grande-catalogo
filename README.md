@@ -1,5 +1,16 @@
 # Electro Monte Grande
 
-Catálogo de 121 aires acondicionados con filtros y buscador.
+Sitio editable en GitHub Pages (el diseño ya no está comprimido).
 
-Sitio: https://mercadopagolink.github.io/electro-monte-grande-catalogo/
+## Preview
+https://mercadopagolink.github.io/electro-monte-grande-catalogo/
+
+Dominio Wix (todavía no apuntado): https://www.electro-mg.com/
+
+## Cómo editar
+- Textos y WhatsApp: `js/config.js`
+- Productos: `js/productos.js`
+- Colores / layout: `css/estilo.css`
+- Estructura: `index.html`
+
+Commit en `main` y en 1 minuto se publica.
