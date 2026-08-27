@@ -3,32 +3,59 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Electro Monte Grande | Catálogo</title>
+  <title>Electro Monte Grande | Aires y electrodomésticos</title>
+  <meta name="description" content="Aires acondicionados, calculadora de frigorías y catálogo en Monte Grande. Consultá stock y cuotas por WhatsApp.">
   <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
   <header class="top">
-    <h1>Electro <span>MG</span></h1>
-    <p>Electrodomésticos · Monte Grande</p>
-    <input id="q" type="search" placeholder="Buscar producto, marca o modelo" autocomplete="off">
+    <div class="brand">
+      <h1>Electro <span>MG</span></h1>
+      <p>Electrodomésticos · Monte Grande</p>
+    </div>
+    <input id="q" type="search" placeholder="Buscar marca o modelo" autocomplete="off">
   </header>
+
   <div class="promo" id="promo"></div>
 
+  <section class="hero">
+    <div class="hero-in">
+      <p class="kicker">Catálogo 2026</p>
+      <h2>El aire justo para tu ambiente</h2>
+      <p>Calculá las frigorías, compará marcas y consultá precio y stock por WhatsApp.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#calc">Calcular frigorías</a>
+        <a class="btn ghost" href="#catalogo">Ver catálogo</a>
+      </div>
+    </div>
+  </section>
+
   <main class="wrap">
-    <section class="card">
-      <h2>Calculadora de Frigorías</h2>
-      <input id="m2" type="number" min="4" step="1" placeholder="Metros cuadrados de la habitación">
+    <ul class="benefits">
+      <li>Hasta 15% OFF en 1 pago</li>
+      <li>Envíos a todo el país</li>
+      <li>Asesoramiento por WhatsApp</li>
+    </ul>
+
+    <section class="card" id="calc">
+      <h2>Calculadora de frigorías</h2>
+      <p class="hint">Regla práctica: 500 frigorías por m². Es una guía; el asesor confirma según techo, sol y aislación.</p>
+      <input id="m2" type="number" min="4" step="1" placeholder="Metros cuadrados del ambiente">
       <button type="button" id="calc-btn">Calcular recomendación</button>
-      <p id="calc-msg">Ingresá los m² y calculá qué aire te conviene</p>
+      <p id="calc-msg">Ingresá los m² y te sugerimos un equipo del catálogo.</p>
     </section>
 
-    <h3 class="sec">CATÁLOGO</h3>
-    <div id="grid" class="grid"></div>
+    <section id="catalogo">
+      <h3 class="sec">CATÁLOGO</h3>
+      <div class="chips" id="chips"></div>
+      <div id="grid" class="grid"></div>
+    </section>
   </main>
 
   <footer>
     <strong>Electro Monte Grande</strong>
     <span id="pie-txt"></span>
+    <a id="wa-footer" class="btn wa-btn" target="_blank" rel="noopener">Consultar por WhatsApp</a>
   </footer>
   <a class="wa" id="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">↗</a>
 
