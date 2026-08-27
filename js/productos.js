@@ -13,12 +13,19 @@ window.EMG_ROWS = [].concat(
   window.EMG_ROWS_4 || []
 );
 
+function poolDe(cat) {
+  if (cat === "TVs") return window.EMG_IMGS_TV || [];
+  if (cat === "Aires") return window.EMG_IMGS_AIR || [];
+  return window.EMG_IMGS_CEL || window.EMG_IMGS || [];
+}
+
 window.PRODUCTOS = (window.EMG_ROWS || []).map(function (r) {
   var cat = r[1];
   var precio = r[5];
   var lista = r[6];
-  var imgs = window.EMG_IMGS || [];
+  var pool = poolDe(cat);
   var idx = r[10] || 0;
+  var img = pool.length ? pool[idx % pool.length] : "";
   return {
     id: r[0],
     cat: cat,
@@ -30,8 +37,10 @@ window.PRODUCTOS = (window.EMG_ROWS || []).map(function (r) {
     cuotas: r[7],
     tag: r[8],
     specs: r[9],
-    img: imgs[idx % imgs.length] || imgs[0] || "",
-    imagen: imgs[idx % imgs.length] || imgs[0] || "",
+    img: img,
+    imagen: img,
+    pool: pool,
+    idx: idx,
     frig: r[11] || 0,
     inverter: !!r[12],
     off: lista ? Math.max(0, Math.round((1 - precio / lista) * 100)) : 0

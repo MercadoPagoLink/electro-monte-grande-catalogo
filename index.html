@@ -2,29 +2,35 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111111">
   <title>Electro Monte Grande | Celulares, Smart TV y Aires</title>
-  <meta name="description" content="Catálogo de Electro Monte Grande: 200 celulares, Smart TV y aires acondicionados. Precios en pesos, cuotas y consulta por WhatsApp.">
-  <link rel="stylesheet" href="css/estilo.css?v=210">
+  <meta name="description" content="Catálogo de Electro Monte Grande en Monte Grande: 200 celulares, Smart TV y aires. Precios en pesos, cuotas y WhatsApp.">
+  <link rel="stylesheet" href="css/estilo.css?v=220">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 </head>
 <body>
-  <header class="g-top">
-    <button class="g-ico" id="menu-btn" aria-label="Menú">☰</button>
-    <a class="g-logo" href="#">EMG</a>
-    <span class="g-tag">Electro Monte Grande · 200 productos</span>
-    <a class="g-ico" id="wa-top" target="_blank" rel="noopener" aria-label="WhatsApp">↗</a>
-  </header>
-  <form class="g-search" action="#catalogo" onsubmit="return false">
-    <input id="q" type="search" placeholder="Buscar celular, TV o aire">
-  </form>
-  <nav class="g-nav" id="cats"></nav>
+  <div class="g-stick">
+    <header class="g-top">
+      <button class="g-ico" id="menu-btn" aria-label="Menú">☰</button>
+      <a class="g-logo" href="#">EMG</a>
+      <span class="g-tag">Electro Monte Grande</span>
+      <a class="g-ico" id="wa-top" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
+    </header>
+    <form class="g-search" action="#catalogo" onsubmit="return false">
+      <input id="q" type="search" placeholder="Buscar celular, TV o aire" autocomplete="off">
+    </form>
+    <nav class="g-nav" id="cats"></nav>
+  </div>
 
   <section class="g-hero">
     <p>CATÁLOGO 2026 · MONTE GRANDE</p>
     <h1>Hasta 15% OFF<br>en 1 pago</h1>
+    <p class="g-hero-sub">Cuotas · Enviós zona sur · Stock a consultar</p>
     <a href="#ofertas">Ver ofertas</a>
   </section>
+
+  <section class="g-atajos" id="atajos"></section>
 
   <section class="g-bens">
     <div>Hasta 12 cuotas<br><b>consultar</b></div>
@@ -37,26 +43,27 @@
     <div class="g-rail" id="ofertas-rail"></div>
   </section>
 
-  <section class="g-calc" id="calc">
-    <h2>Calculá las frigorías</h2>
-    <p>500 frigorías por m² · te sugerimos un equipo del catálogo</p>
-    <input id="m2" type="number" min="4" placeholder="m² del ambiente">
-    <button type="button" id="calc-btn">Calcular</button>
-    <p id="calc-msg">Ingresá los m² y te sugerimos un aire.</p>
-  </section>
-
   <section class="g-block" id="catalogo">
     <h2 id="cat-title">Catálogo <small id="cat-count"></small></h2>
     <div class="g-chips" id="chips"></div>
     <div class="g-grid" id="grid"></div>
   </section>
 
+  <section class="g-calc" id="calc">
+    <h2>Calculá las frigorías</h2>
+    <p>500 frigorías por m² · te sugerimos un equipo del catálogo</p>
+    <input id="m2" type="number" min="4" inputmode="numeric" placeholder="m² del ambiente">
+    <button type="button" id="calc-btn">Calcular</button>
+    <p id="calc-msg">Ingresá los m² y te sugerimos un aire.</p>
+  </section>
+
   <footer class="g-foot">
     <strong>Electro Monte Grande</strong>
+    <span id="pie-dir"></span>
     <span id="pie-txt"></span>
     <a id="wa-footer" class="g-wa" target="_blank" rel="noopener">Consultar por WhatsApp</a>
   </footer>
-  <a class="fab" id="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">↗</a>
+  <a class="fab" id="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
   <aside class="drawer" id="drawer">
     <button id="close-menu">Cerrar</button>
     <a href="#ofertas">Ofertas del mes</a>
@@ -67,18 +74,18 @@
   <div class="ficha" id="ficha" hidden>
     <div class="ficha-bg" data-cerrar></div>
     <div class="ficha-panel" role="dialog" aria-modal="true" aria-labelledby="ficha-titulo">
-      <button class="ficha-x" type="button" data-cerrar aria-label="Cerrar">← Volver</button>
+      <button class="ficha-x" type="button" data-cerrar aria-label="Cerrar">← Volver al catálogo</button>
       <div id="ficha-body"></div>
     </div>
   </div>
 
   <script src="js/config.js"></script>
-  <script src="js/imgs.js?v=210"></script>
+  <script src="js/imgs.js?v=220"></script>
   <script src="js/rows-1.js"></script>
   <script src="js/rows-2.js"></script>
   <script src="js/rows-3.js"></script>
   <script src="js/rows-4.js"></script>
-  <script src="js/productos.js?v=210"></script>
-  <script src="js/app.js?v=210"></script>
+  <script src="js/productos.js?v=220"></script>
+  <script src="js/app.js?v=220"></script>
 </body>
 </html>

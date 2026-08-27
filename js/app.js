@@ -18,12 +18,12 @@ function porId(id) {
   return PRODUCTOS.find(p => p.id === id);
 }
 function fotosDe(p) {
-  const banco = window.EMG_IMGS || [];
+  const banco = p.pool && p.pool.length ? p.pool : (window.EMG_IMGS || []);
   if (!banco.length) return [imgDe(p)].filter(Boolean);
-  const base = Math.max(0, banco.indexOf(imgDe(p)));
+  const base = Math.max(0, p.idx || 0);
   const out = [];
   const seen = {};
-  [0, 1, 2, 4].forEach(function (step) {
+  [0, 1, 2, 3].forEach(function (step) {
     const url = banco[(base + step) % banco.length];
     if (url && !seen[url]) {
       seen[url] = 1;
@@ -31,6 +31,12 @@ function fotosDe(p) {
     }
   });
   return out.length ? out : [imgDe(p)];
+}
+function extraDe(p) {
+  if (p.cat === "Aires" && p.frig) {
+    return p.frig.toLocaleString("es-AR") + " fg" + (p.inverter ? " · Inverter" : "");
+  }
+  return p.specs || "";
 }
 
 let marcaActiva = "Todas";
@@ -42,18 +48,16 @@ function listaBase() {
   return PRODUCTOS.filter(p => p.cat === catActiva);
 }
 
-function cardHTML(p) {
-  const extra = p.cat === "Aires" && p.frig
-    ? p.frig.toLocaleString("es-AR") + " fg" + (p.inverter ? " · Inverter" : "")
-    : (p.specs || "");
+function cardHTML(p, cls) {
   return `
-    <article class="g-card" data-id="${p.id}">
-      <img src="${imgDe(p)}" alt="${p.marca} ${p.nombre}" loading="lazy" onerror="this.style.background='#eee';this.removeAttribute('src')">
+    <article class="${cls}" data-id="${p.id}">
+      <div class="g-foto"><img src="${imgDe(p)}" alt="${p.marca} ${p.nombre}" loading="lazy" onerror="this.style.opacity='0'"></div>
       <span class="g-off">${p.off}% OFF</span>
-      <h3>${p.marca} ${p.nombre}</h3>
+      <p class="g-marca">${p.marca}</p>
+      <h3>${p.nombre}</h3>
       <p class="g-old">${plata(p.lista)}</p>
       <p class="g-price">${plata(p.precio)}</p>
-      <p class="g-cuotas">${p.cuotas} cuotas · ${extra}</p>
+      <p class="g-cuotas">${p.cuotas} cuotas · ${plata(Math.round(p.precio / p.cuotas))}</p>
       <button type="button" class="g-buy" data-id="${p.id}">Ver producto</button>
     </article>`;
 }
@@ -68,20 +72,38 @@ function bindCards(root) {
   });
 }
 
+function setCat(id) {
+  catActiva = id;
+  marcaActiva = "Todas";
+  document.getElementById("q").value = "";
+  renderCats();
+  renderChips();
+  filtrar();
+  document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
+}
+
 function renderCats() {
   document.getElementById("cats").innerHTML = CATEGORIAS.map(c =>
     `<button class="${c.id === catActiva ? "on" : ""}" data-cat="${c.id}">${c.ico} ${c.nom}</button>`
   ).join("");
   document.querySelectorAll("#cats button").forEach(btn => {
-    btn.onclick = () => {
-      catActiva = btn.dataset.cat;
-      marcaActiva = "Todas";
-      document.getElementById("q").value = "";
-      renderCats();
-      renderChips();
-      filtrar();
-      document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
-    };
+    btn.onclick = () => setCat(btn.dataset.cat);
+  });
+}
+
+function renderAtajos() {
+  const el = document.getElementById("atajos");
+  if (!el) return;
+  const items = [
+    { id: "Celulares", t: "Celulares", s: PRODUCTOS.filter(p => p.cat === "Celulares").length + " equipos" },
+    { id: "TVs", t: "Smart TV", s: PRODUCTOS.filter(p => p.cat === "TVs").length + " pantallas" },
+    { id: "Aires", t: "Aires", s: PRODUCTOS.filter(p => p.cat === "Aires").length + " equipos" }
+  ];
+  el.innerHTML = items.map(i =>
+    `<button type="button" data-cat="${i.id}"><b>${i.t}</b><span>${i.s}</span></button>`
+  ).join("");
+  el.querySelectorAll("button").forEach(btn => {
+    btn.onclick = () => setCat(btn.dataset.cat);
   });
 }
 
@@ -114,24 +136,10 @@ function filtrar() {
   const count = document.getElementById("cat-count");
   if (count) count.textContent = lista.length + " productos";
   if (!lista.length) {
-    grid.innerHTML = '<p class="vacio">No hay productos en esta categoría.</p>';
+    grid.innerHTML = '<p class="vacio">No hay productos con ese filtro.</p>';
     return;
   }
-  grid.innerHTML = lista.map(p => {
-    const extra = p.cat === "Aires" && p.frig
-      ? p.frig.toLocaleString("es-AR") + " fg" + (p.inverter ? " · Inverter" : "")
-      : (p.specs || "");
-    return `
-    <article class="g-prod" data-id="${p.id}">
-      <img src="${imgDe(p)}" alt="${p.marca} ${p.nombre}" loading="lazy" onerror="this.style.background='#eee';this.removeAttribute('src')">
-      <span class="g-off">${p.off}% OFF</span>
-      <h3>${p.marca} ${p.nombre}</h3>
-      <p class="g-old">${plata(p.lista)}</p>
-      <p class="g-price">${plata(p.precio)}</p>
-      <p class="g-cuotas">${p.cuotas} cuotas · ${extra}</p>
-      <button type="button" class="g-buy" data-id="${p.id}">Ver producto</button>
-    </article>`;
-  }).join("");
+  grid.innerHTML = lista.map(p => cardHTML(p, "g-prod")).join("");
   bindCards(grid);
 }
 
@@ -144,12 +152,13 @@ function abrirFicha(id) {
     ? p.frig.toLocaleString("es-AR") + " frigorías" + (p.inverter ? " · Inverter" : "")
     : "";
   const catNom = p.cat === "TVs" ? "Smart TV" : p.cat;
+  const cuota = Math.round(p.precio / p.cuotas);
   const thumbs = fotos.map((url, i) =>
     `<button type="button" class="ficha-thumb${i === 0 ? " on" : ""}" data-src="${url}"><img src="${url}" alt=""></button>`
   ).join("");
   document.getElementById("ficha-body").innerHTML = `
     <div class="ficha-fotos">
-      <img id="ficha-foto" src="${fotos[0]}" alt="${p.marca} ${p.nombre}" onerror="this.style.background='#eee';this.removeAttribute('src')">
+      <img id="ficha-foto" src="${fotos[0]}" alt="${p.marca} ${p.nombre}" onerror="this.style.opacity='0'">
       <div class="ficha-thumbs">${thumbs}</div>
     </div>
     <p class="ficha-cat">${catNom}${p.tag ? " · " + p.tag : ""}</p>
@@ -157,20 +166,22 @@ function abrirFicha(id) {
     <p class="ficha-specs">${p.specs || extraAire}</p>
     <p class="g-old">${plata(p.lista)}</p>
     <p class="g-price">${plata(p.precio)}</p>
-    <p class="g-cuotas">${p.cuotas} cuotas · consultar</p>
-    <p class="g-tr">+15% OFF con transferencia ${plata(transf)}</p>
+    <p class="g-cuotas">${p.cuotas} cuotas de ${plata(cuota)}</p>
+    <p class="g-tr">Transferencia ${plata(transf)} · 15% OFF</p>
     <h3 class="ficha-h">Descripción</h3>
     <p class="ficha-desc">${p.descripcion || "Consultá ficha técnica y stock por WhatsApp."}</p>
     ${extraAire ? `<p class="ficha-desc"><b>Capacidad:</b> ${extraAire}</p>` : ""}
     <ul class="ficha-lista">
       <li>Marca: ${p.marca}</li>
       <li>Categoría: ${catNom}</li>
-      ${p.specs ? `<li>Especificaciones: ${p.specs}</li>` : ""}
+      ${p.specs ? `<li>${p.specs}</li>` : ""}
       <li>Precio de lista: ${plata(p.lista)}</li>
       <li>Precio EMG: ${plata(p.precio)}</li>
-      <li>Cuotas: ${p.cuotas}</li>
+      <li>Stock y cuotas a confirmar</li>
     </ul>
-    <a class="g-buy ficha-wa" target="_blank" rel="noopener" href="${waLink("Hola, consulto por " + p.marca + " " + p.nombre + " (" + plata(p.precio) + ")")}">Consultar por WhatsApp</a>
+    <div class="ficha-bar">
+      <a class="g-buy ficha-wa" target="_blank" rel="noopener" href="${waLink("Hola, consulto por " + p.marca + " " + p.nombre + " (" + plata(p.precio) + ")")}">Consultar por WhatsApp</a>
+    </div>
   `;
   document.getElementById("ficha").hidden = false;
   document.body.classList.add("ficha-on");
@@ -206,13 +217,16 @@ function leerHash() {
 }
 
 document.getElementById("pie-txt").textContent = (window.EMG && EMG.pie) || "";
+if (document.getElementById("pie-dir") && window.EMG) {
+  document.getElementById("pie-dir").textContent = [EMG.direccion, EMG.horario].filter(Boolean).join(" · ");
+}
 ["wa-float", "wa-top"].forEach(id => {
   const n = document.getElementById(id);
   if (n) n.href = waLink();
 });
 document.getElementById("wa-footer").href = waLink("Hola, quiero asesoramiento");
 document.getElementById("q").addEventListener("input", filtrar);
-document.getElementById("ofertas-rail").innerHTML = PRODUCTOS.filter(esOferta).slice(0, 10).map(cardHTML).join("");
+document.getElementById("ofertas-rail").innerHTML = PRODUCTOS.filter(esOferta).slice(0, 12).map(p => cardHTML(p, "g-card")).join("");
 bindCards(document.getElementById("ofertas-rail"));
 document.getElementById("menu-btn").onclick = () => document.getElementById("drawer").classList.add("open");
 document.getElementById("close-menu").onclick = () => document.getElementById("drawer").classList.remove("open");
@@ -231,13 +245,11 @@ document.getElementById("calc-btn").onclick = () => {
   const rec = aires.slice().sort((a, b) => Math.abs(a.frig - need) - Math.abs(b.frig - need))[0];
   if (!rec) { msg.textContent = m2 + " m² ≈ " + need + " frigorías."; return; }
   msg.textContent = m2 + " m² ≈ " + need + " frigorías. Sugerido: " + rec.marca + " — " + rec.nombre + " (" + plata(rec.precio) + ")";
-  catActiva = "Aires";
-  marcaActiva = rec.marca;
-  renderCats(); renderChips(); filtrar();
-  document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
+  abrirFicha(rec.id);
 };
 
 renderCats();
+renderAtajos();
 renderChips();
 filtrar();
 leerHash();
